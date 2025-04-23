@@ -16,7 +16,7 @@ information specific to Linux Alpine kernels, see
 
 ## Supported Python Versions
 
-Python >= 3.7 and <= 3.11
+Python >= 3.7 and <= 3.12
 
 ## Installation & usage
 
@@ -89,7 +89,6 @@ COPY ./bench.py .
 # here) or ENTRYPOINT.
 CMD python3 -u bench.py
 ```
-
 
 ## Troubleshooting
 
