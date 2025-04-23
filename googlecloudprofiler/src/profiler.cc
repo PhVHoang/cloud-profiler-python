@@ -43,7 +43,7 @@ struct PyObjectDecReffer {
   }
 };
 
-typedef std::unique_ptr<PyObject, PyObjectDecReffer> PyObjectRef;
+typedef std::unique_ptr<PyObject, PyObjectDecReffer> PyObjectRef;nnn
 
 // Helper class to store and reset errno when in a signal handler.
 class ErrnoRaii {
@@ -131,6 +131,7 @@ const char *CallTraceErrorToName(CallTraceErrors err) {
   }
 }
 
+// Core signal handler. This is called when the SIGPROF signal is delivered to a thread
 void Profiler::Handle(int signum, siginfo_t *info, void *context) {
   // Gets around -Wunused-parameter.
   (void)signum;
@@ -182,6 +183,7 @@ void Profiler::Reset() {
 }
 
 // Must be called when GIL is held.
+// Builds a Python dictionary object from the aggregated traces.
 PyObject *Profiler::PythonTraces() {
   // Asserts that GIL is held in debug mode.
   assert(PyGILState_Check());
@@ -269,6 +271,9 @@ bool AlmostThere(const struct timespec &finish, const struct timespec &lap) {
   return TimeLessThan(finish, TimeAdd(now, laps));
 }
 
+/**
+ * Control the full profiling session.
+ */
 PyObject *CPUProfiler::Collect() {
   Reset();
   // Hooks to PyCode_Type.tp_dealloc so that a PyCodeObject is recorded before

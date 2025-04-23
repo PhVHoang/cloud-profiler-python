@@ -51,6 +51,15 @@ class SignalHandler {
   bool SetSigprofInterval(int64_t period_usec);
 };
 
+// A hook to PyCode_Type.tp_dealloc that records the code object to
+// deallocated_code_ before the actual deallocation. This is used to
+// collect function information of interest from the code object
+// before it is deallocated. The hook is cancelled when
+// CodeDeallocHook goes out of scope. The hook must be called when
+// GIL is held, otherwise another thread may be updating
+// allocated_code_ during PyCodeObject deallocation.
+// The destructor of CodeDeallocHook must be called when GIL is held,
+// otherwise PyCode_Type.tp_dealloc may be updating.
 class CodeDeallocHook {
  public:
   // The constructor must be called when GIL is held.
