@@ -43,7 +43,7 @@ struct PyObjectDecReffer {
   }
 };
 
-typedef std::unique_ptr<PyObject, PyObjectDecReffer> PyObjectRef;nnn
+typedef std::unique_ptr<PyObject, PyObjectDecReffer> PyObjectRef;
 
 // Helper class to store and reset errno when in a signal handler.
 class ErrnoRaii {
